@@ -28,7 +28,7 @@ local sheetOptions =
 		},
 		{--dirt_04.png
 			x=732,y=994,width=120,height=140
-			},
+		},
 		{--dirt_05.png
 			x=732,y=852,width=120,height=140
 		},
@@ -496,10 +496,10 @@ local sheetOptions =
 		},
 		{--western_watertower.png
 			x=976,y=710,width=120,height=140
-		}
-	}
+		},
+	},
 }
-
+local objectSheet = graphics.newImageSheet( "hexagonAll_sheet.png", sheetOptions )
 
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
