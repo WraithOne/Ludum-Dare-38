@@ -118,6 +118,7 @@ local terrainSheet =
 local terrainTiles = graphics.newImageSheet( "hexagonAll_sheet.png", terrainSheet )
 
 -- Initialize variables
+local gameLoopTimer
 local gameTime = 240
 local score = 0
 
@@ -129,13 +130,13 @@ local mapHeight = 7
 -- Player
 local playerWood = 0
 local playerFood = 0
-local playerHouses = 0
+local playerVilligar = 0
 local playerSoldier = 0
 
 -- Enemie
 local enemieWood = 0
 local enemieFood = 0
-local enemieHouse = 0
+local enemieVilligar = 0
 local enemieSoldier = 0
 
 -- Scenegroups
@@ -163,18 +164,39 @@ local function updateText()
 	gameTimeText.text = "Time left:" ..gameTime
 	playerWoodText.text = "Wood: " .. playerWood
 	playerFoodText.text = "Food: " .. playerFood
-	playerHouseText.text = "Houses: " .. playerHouses
+	playerHouseText.text = "Villigars: " .. playerVilligar
 	playerSoldierText.text = "Soldiers: " .. playerSoldier
 	enemieWoodText.text = "Wood: " .. enemieWood
 	enemieFoodText.text = "Food: " .. enemieFood
-	enemieHouseText.text = "Houses: " .. enemieHouse
+	enemieHouseText.text = "Houses: " .. enemieVilligar
 	enemieSoldierText.text = "Soldiers: " .. enemieSoldier
+end
+
+local function farmClicked()
+	playerFood = playerFood + 1
+	updateText()
+end
+
+local function houseClicked()
+	playerVilligar = playerVilligar + 1
+	updateText()
+end
+
+local function lumbermillClicked()
+	playerWood = playerWood + 1
+	updateText()
+end
+
+local function castleClicked()
+	playerSoldier = playerSoldier + 1
+	updateText()	
 end
 
 local function createMap()
 	local offsetX = 0
 	local offsetY = 0
 	local tilenumber = 0
+	local newTile
 
 	for i = 0, mapHeight do
 		for j = 0, mapWidth do
@@ -182,26 +204,47 @@ local function createMap()
 			tilenumber = tilenumber + 1
 
 			if(tilenumber == 28) then
+			-- Enemie Farm
 				rnd = 31
+				newTile = display.newImageRect(mainGroup, terrainTiles, rnd ,120,140)
 			elseif(tilenumber == 30) then
+			-- Enemie House
 				rnd = 30
+				newTile = display.newImageRect(mainGroup, terrainTiles, rnd ,120,140)
 			elseif(tilenumber == 32) then
+			-- Enemie Lumber mill
 				rnd = 29
+				newTile = display.newImageRect(mainGroup, terrainTiles, rnd ,120,140)
 			elseif(tilenumber == 42) then
+			-- Enemie Castle
 				rnd = 32
+				newTile = display.newImageRect(mainGroup, terrainTiles, rnd ,120,140)
 			elseif(tilenumber == 66) then
+			-- Player Castle
 				rnd = 32
+				newTile = display.newImageRect(mainGroup, terrainTiles, rnd ,120,140)
+				newTile:addEventListener("tap", castleClicked)
 			elseif(tilenumber == 76) then
-				rnd = 29
-			elseif(tilenumber == 78) then
-				rnd = 30
-			elseif(tilenumber == 81) then
+			-- Player Farm
 				rnd = 31
+				newTile = display.newImageRect(mainGroup, terrainTiles, rnd ,120,140)
+				newTile:addEventListener("tap", farmClicked)
+			elseif(tilenumber == 78) then
+			-- Player House
+				rnd = 30
+				newTile = display.newImageRect(mainGroup, terrainTiles, rnd ,120,140)
+				newTile:addEventListener("tap", houseClicked)
+			elseif(tilenumber == 80) then
+			-- Player Lumber mill
+				rnd = 29
+				newTile = display.newImageRect(mainGroup, terrainTiles, rnd ,120,140)
+				newTile:addEventListener("tap", lumbermillClicked)
 			else
+			-- Terrain
 				rnd = math.random(28)
+				newTile = display.newImageRect(backGroup, terrainTiles, rnd ,120,140)
 			end
 
-			local newTile = display.newImageRect(mainGroup, terrainTiles, rnd ,120,140)
 			table.insert(mapTable, newTile)
 			if(i%2 == 0) then
 				offsetX = 0
@@ -218,7 +261,7 @@ local function createMap()
 end
 
 local function computeScore()
-	score = playerWood + playerFood + (playerHouses * 5)+ (playerSoldier * 10)
+	score = playerWood + playerFood + (playerVilligar * 5)+ (playerSoldier * 10)
 end
 
 local function endGame()
@@ -231,6 +274,13 @@ local function abortGame()
 	composer.gotoScene("menu", { time=800, effect="crossFade" })
 end
 
+local function gameLoop()
+	gameTime = gameTime - 1
+	if(gameTime < 1) then
+		endGame()
+	end
+	updateText()
+end
 
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
@@ -262,7 +312,7 @@ function scene:create( event )
 	enemieText:setFillColor(1,0,0)
 	enemieWoodText = display.newText(uiGroup, "Wood: " .. enemieWood, 360, 45, native.systemFont, 32)
 	enemieFoodText = display.newText(uiGroup, "Food: " .. enemieFood, 540, 45, native.systemFont, 32)
-	enemieHouseText = display.newText(uiGroup, "Houses: " .. enemieHouse, 715, 45, native.systemFont, 32)
+	enemieHouseText = display.newText(uiGroup, "Villigars: " .. enemieVilligar, 715, 45, native.systemFont, 32)
 	enemieSoldierText = display.newText(uiGroup, "Soldiers: " .. enemieSoldier, 900, 45, native.systemFont, 32)
 
 	local abortButton = display.newText( sceneGroup, "Exit", 1225, 45, native.systemFont, 48 )
@@ -275,7 +325,7 @@ function scene:create( event )
 	playerText:setFillColor(0,0,1)
 	playerWoodText = display.newText(uiGroup, "Wood: " .. playerWood, 360, 727, native.systemFont, 32)
 	playerFoodText = display.newText(uiGroup, "Food: " .. playerFood, 540, 727, native.systemFont, 32)
-	playerHouseText = display.newText(uiGroup, "Houses: " .. playerHouses, 715, 727, native.systemFont, 32)
+	playerHouseText = display.newText(uiGroup, "Villigars: " .. playerVilligar, 715, 727, native.systemFont, 32)
 	playerSoldierText = display.newText(uiGroup, "Soldiers: " .. playerSoldier, 900, 727, native.systemFont, 32)
 	gameTimeText = display.newText(uiGroup, "Time left: ".. gameTime, 1135, 720, native.systemFont, 48)
 	gameTimeText:setFillColor(0,1,0)
@@ -294,7 +344,7 @@ function scene:show( event )
 
 	elseif ( phase == "did" ) then
 		-- Code here runs when the scene is entirely on screen
-
+		gameLoopTimer = timer.performWithDelay( 1000, gameLoop, 0 )
 	end
 end
 
