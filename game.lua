@@ -501,6 +501,70 @@ local sheetOptions =
 }
 local objectSheet = graphics.newImageSheet( "hexagonAll_sheet.png", sheetOptions )
 
+-- Initialize variables
+local gameTime = 240
+local score = 0
+
+-- Player
+local playerWood = 0
+local playerFood = 0
+local playerHouses = 0
+local playerSoldier = 0
+
+-- Enemie
+local enemieWood = 0
+local enemieFood = 0
+local enemieHouse = 0
+local enemieSoldier = 0
+
+-- Scenegroups
+local backGroup
+local mainGroup
+local uiGroup
+
+-- Text
+local gameTimeText
+local playerText
+local playerWoodText
+local playerFoodText
+local playerHouseText
+local playerSoldierText
+local enemieText
+local enemieWoodText
+local enemieFoodText
+local enemieHouseText
+local enemieSoldierText
+
+-- Audio
+
+-- Functions
+local function updateText()
+	gameTimeText.text = "Time left:" ..gameTime
+	playerWoodText.text = "Wood: " .. playerWood
+	playerFoodText.text = "Food: " .. playerFood
+	playerHouseText.text = "Houses: " .. playerHouses
+	playerSoldierText.text = "Soldiers: " .. playerSoldier
+	enemieWoodText.text = "Wood: " .. enemieWood
+	enemieFoodText.text = "Food: " .. enemieFood
+	enemieHouseText.text = "Houses: " .. enemieHouse
+	enemieSoldierText.text = "Soldiers: " .. enemieSoldier
+end
+
+local function computeScore()
+	score = playerWood + playerFood + (playerHouses * 5)+ (playerSoldier * 10)
+end
+
+local function endGame()
+	computeScore()
+	composer.setVariable("finalScore", score)
+	composer.gotoScene("highScore", {time=800, effect="crossFade"})
+end
+
+local function abortGame()
+	composer.gotoScene("menu", { time=800, effect="crossFade" })
+end
+
+
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
 -- -----------------------------------------------------------------------------------
@@ -510,6 +574,34 @@ function scene:create( event )
 
 	local sceneGroup = self.view
 	-- Code here runs when the scene is first created but has not yet appeared on screen
+
+-- Set up display groups
+	backGroup = display.newGroup()  -- Display group for the background image
+	sceneGroup:insert( backGroup )  -- Insert into the scene's view group
+
+	mainGroup = display.newGroup()  -- Display group for the ship, asteroids, lasers, etc.
+	sceneGroup:insert( mainGroup )  -- Insert into the scene's view group
+
+	uiGroup = display.newGroup()    -- Display group for UI objects like the score
+	sceneGroup:insert( uiGroup )    -- Insert into the scene's view group
+
+	-- Display Texts
+	enemieText = display.newText( uiGroup, "Enemie ", 48, 260, native.systemFont, 24)
+	enemieWoodText = display.newText(uiGroup, "Wood: " .. enemieWood, 160, 262, native.systemFont, 16)
+	enemieFoodText = display.newText(uiGroup, "Food: " .. enemieFood, 260, 262, native.systemFont, 16)
+	enemieHouseText = display.newText(uiGroup, "Houses: " .. enemieHouse, 360, 262, native.systemFont, 16)
+	enemieSoldierText = display.newText(uiGroup, "Soldiers: " .. enemieSoldier, 460, 262, native.systemFont, 16)
+
+	local abortButton = display.newText( sceneGroup, "Abort", 650, 265, native.systemFont, 36 )
+	abortButton:setFillColor( 1, 0, 0 )
+	abortButton:addEventListener( "tap", abortGame )
+
+	playerText = display.newText( uiGroup, "Player ", 40, 700, native.systemFont, 24)
+	playerWoodText = display.newText(uiGroup, "Wood: " .. playerWood, 160, 701, native.systemFont, 16)
+	playerFoodText = display.newText(uiGroup, "Food: " .. playerFood, 260, 701, native.systemFont, 16)
+	playerHouseText = display.newText(uiGroup, "Houses: " .. playerHouses, 360, 701, native.systemFont, 16)
+	playerSoldierText = display.newText(uiGroup, "Soldiers: " .. playerSoldier, 460, 701, native.systemFont, 16)
+	gameTimeText = display.newText(uiGroup, "Time left: ".. gameTime, 625, 700, native.systemFont, 24)
 
 end
 
