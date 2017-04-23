@@ -1,6 +1,6 @@
 # Ludum Dare 38 "A Small World"
 
-[ 2 Close ]
+2 Close
 
 A game by [WraithOne](https://twitter.com/WraithOne)
 
@@ -10,9 +10,9 @@ A game by [WraithOne](https://twitter.com/WraithOne)
 * Click on the House to gain Villigars (needs 3 Food and 3 Wood)
 * Click on the Castle to gain Soldiers ( needs 1 Villigar, 10 Food and 10 Wood)
 
-## Downloads
-* [Windows](https://wraithone.itch.io/ASmallWorld.zip)
-* [Android](https://wraithone.itch.io/ASmallWorld.apk)
+## Links
+* [Windows](https://wraithone.itch.io/2-close)
+* [Ludum Dare](https://ldjam.com/users/wraithone/)
 
 ## Credits
 
