@@ -119,7 +119,7 @@ local terrainTiles = graphics.newImageSheet( "hexagonAll_sheet.png", terrainShee
 
 -- Initialize variables
 local gameLoopTimer
-local gameTime = 30
+local gameTime = 60
 local score = 0
 
 -- Map
