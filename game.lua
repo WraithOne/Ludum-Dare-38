@@ -119,7 +119,7 @@ local terrainTiles = graphics.newImageSheet( "hexagonAll_sheet.png", terrainShee
 
 -- Initialize variables
 local gameLoopTimer
-local gameTime = 240
+local gameTime = 30
 local score = 0
 
 -- Map
@@ -178,7 +178,13 @@ local function farmClicked()
 end
 
 local function houseClicked()
-	playerVilligar = playerVilligar + 1
+	if(playerFood >= 3 and playerWood >= 3) then
+		playerVilligar = playerVilligar + 1
+		playerFood = playerFood - 3
+		playerWood = playerWood - 3
+		else
+		-- Warning Text
+	end
 	updateText()
 end
 
@@ -188,7 +194,15 @@ local function lumbermillClicked()
 end
 
 local function castleClicked()
-	playerSoldier = playerSoldier + 1
+if(playerFood >= 10 and playerWood >= 10 and playerVilligar >= 1) then
+		playerSoldier = playerSoldier + 1
+		playerFood = playerFood - 10
+		playerWood = playerWood - 10
+		playerVilligar = playerVilligar -1
+		else
+		-- Warning Text
+	end
+	
 	updateText()	
 end
 
