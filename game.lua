@@ -17,89 +17,101 @@ local terrainSheet =
 {
 	frames =
 	{
-		{--dirt_06.png
+		{--dirt_06.png 1
 			x=732,y=710,width=120,height=140
 		},
-		{--dirt_11.png
+		{--dirt_11.png 2
 			x=732,y=0,width=120,height=140
 		},
-		{--dirt_12.png
+		{--dirt_12.png 3
 			x=610,y=1846,width=120,height=140
 		},
-		{--dirt_13.png
+		{--dirt_13.png 4
 			x=610,y=1704,width=120,height=140
 		},
-		{--dirt_14.png
+		{--dirt_14.png 5
 			x=610,y=1562,width=120,height=140
 		},
-		{--dirt_15.png
+		{--dirt_15.png 6
 			x=610,y=1420,width=120,height=140
 		},
-		{--dirt_16.png
+		{--dirt_16.png 7
 			x=122,y=426,width=120,height=140
 		},
-		{--dirt_17.png
+		{--dirt_17.png 8
 			x=610,y=1136,width=120,height=140
 		},
-		{--dirt_18.png
+		{--dirt_18.png 9
 			x=610,y=994,width=120,height=140
 		},
-		{--grass_05.png
+		{--grass_05.png 10
 			x=610,y=142,width=120,height=140
 		},
-		{--grass_10.png 
+		{--grass_10.png 11
 			x=488,y=1420,width=120,height=140
 		},
-		{--grass_11.png 
+		{--grass_11.png 12
 			x=488,y=1278,width=120,height=140
 		},
-		{--grass_12.png 
+		{--grass_12.png 13
 			x=488,y=1136,width=120,height=140
 		},
-		{--grass_13.png 
+		{--grass_13.png 14
 			x=488,y=994,width=120,height=140
 		},
-		{--grass_14.png 
+		{--grass_14.png 15
 			x=488,y=852,width=120,height=140
 		},
-		{--grass_15.png 
+		{--grass_15.png 16
 			x=488,y=710,width=120,height=140
 		},
-		{--grass_16.png 
+		{--grass_16.png 17
 			x=488,y=568,width=120,height=140
 		},
-		{--sand_07.png
+		{--sand_07.png 18
 			x=244,y=426,width=120,height=140
 		},
-		{--sand_12.png
+		{--sand_12.png 19
 			x=122,y=1704,width=120,height=140
 		},
-		{--sand_13.png
+		{--sand_13.png 20
 			x=122,y=1562,width=120,height=140
 		},
-		{--sand_14.png
+		{--sand_14.png 21
 			x=122,y=1420,width=120,height=140
 		},
-		{--sand_15.png
+		{--sand_15.png 22
 			x=122,y=1278,width=120,height=140
 		},
-		{--sand_16.png
+		{--sand_16.png 23
 			x=122,y=1136,width=120,height=140
 		},
-		{--sand_17.png
+		{--sand_17.png 24
 			x=122,y=994,width=120,height=140
 		},
-		{--sand_18.png
+		{--sand_18.png 25
 			x=122,y=852,width=120,height=140
 		},
-		{--stone_07.png
+		{--stone_07.png 26
 			x=0,y=1704,width=120,height=140
 		},
-		{--stone_12.png
+		{--stone_12.png 27
 			x=0,y=994,width=120,height=140
 		},
-		{--stone_13.png
+		{--stone_13.png 28
 			x=0,y=852,width=120,height=140
+		},
+		{--medieval_farm.png 29
+			x=854,y=1846,width=120,height=140
+		},
+		{--medieval_house.png 30
+			x=854,y=1704,width=120,height=140
+		},
+		{--medieval_lumber.png 31
+			x=610,y=852,width=120,height=140
+		},
+		{--medieval_openCastle.png 32
+			x=854,y=1136,width=120,height=140
 		},
 	},
 }
@@ -162,9 +174,33 @@ end
 local function createMap()
 	local offsetX = 0
 	local offsetY = 0
+	local tilenumber = 0
+
 	for i = 0, mapHeight do
 		for j = 0, mapWidth do
-			local rnd = math.random(27)
+			local rnd = 0
+			tilenumber = tilenumber + 1
+
+			if(tilenumber == 28) then
+				rnd = 31
+			elseif(tilenumber == 30) then
+				rnd = 30
+			elseif(tilenumber == 32) then
+				rnd = 29
+			elseif(tilenumber == 42) then
+				rnd = 32
+			elseif(tilenumber == 66) then
+				rnd = 32
+			elseif(tilenumber == 76) then
+				rnd = 29
+			elseif(tilenumber == 78) then
+				rnd = 30
+			elseif(tilenumber == 81) then
+				rnd = 31
+			else
+				rnd = math.random(28)
+			end
+
 			local newTile = display.newImageRect(mainGroup, terrainTiles, rnd ,120,140)
 			table.insert(mapTable, newTile)
 			if(i%2 == 0) then
