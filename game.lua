@@ -13,39 +13,12 @@ local scene = composer.newScene()
 -- the scene is removed entirely (not recycled) via "composer.removeScene()"
 -- -----------------------------------------------------------------------------------
 
-local sheetOptions =
+local terrainSheet =
 {
 	frames =
 	{
-		{--dirt_01.png 
-			x=732,y=1420,width=120,height=140
-		},
-		{--dirt_02.png 
-			x=732,y=1278,width=120,height=140
-		},
-		{--dirt_03.png 
-			x=732,y=1136,width=120,height=140
-		},
-		{--dirt_04.png
-			x=732,y=994,width=120,height=140
-		},
-		{--dirt_05.png
-			x=732,y=852,width=120,height=140
-		},
 		{--dirt_06.png
 			x=732,y=710,width=120,height=140
-		},
-		{--dirt_07.png
-			x=244,y=1136,width=120,height=140
-		},
-		{--dirt_08.png
-			x=732,y=426,width=120,height=140
-		},
-		{--dirt_09.png
-			x=732,y=284,width=120,height=140
-		},
-		{--dirt_10.png
-			x=732,y=142,width=120,height=140
 		},
 		{--dirt_11.png
 			x=732,y=0,width=120,height=140
@@ -71,35 +44,8 @@ local sheetOptions =
 		{--dirt_18.png
 			x=610,y=994,width=120,height=140
 		},
-		{--dirt_19.png
-			x=1342,y=245,width=88,height=101
-		},
-		{--grass_01.png
-			x=610,y=710,width=120,height=140
-		},
-		{--grass_02.png
-			x=610,y=568,width=120,height=140
-		},
-		{--grass_03.png
-			x=610,y=426,width=120,height=140
-		},
-		{--grass_04.png
-			x=610,y=284,width=120,height=140
-		},
 		{--grass_05.png
 			x=610,y=142,width=120,height=140
-		},
-		{--grass_06.png
-			x=610,y=0,width=120,height=140
-		},
-		{--grass_07.png
-			x=488,y=1846,width=120,height=140
-		},
-		{--grass_08.png
-			x=488,y=1704,width=120,height=140
-		},
-		{--grass_09.png
-			x=488,y=1562,width=120,height=140
 		},
 		{--grass_10.png 
 			x=488,y=1420,width=120,height=140
@@ -122,227 +68,8 @@ local sheetOptions =
 		{--grass_16.png 
 			x=488,y=568,width=120,height=140
 		},
-		{--grass_17.png 
-			x=488,y=426,width=120,height=140
-		},
-		{--grass_18.png 
-			x=488,y=284,width=120,height=140
-		},
-		{--grass_19.png 
-			x=1342,y=451,width=88,height=102
-		},
-		{--mars_01.png 
-			x=488,y=0,width=120,height=140
-		},
-		{--mars_02.png 
-			x=1342,y=555,width=88,height=101
-		},
-		{--mars_03.png 
-			x=366,y=1704,width=120,height=140
-		},
-		{--mars_04.png 
-			x=366,y=1562,width=120,height=140
-		},
-		{--mars_05.png 
-			x=366,y=1420,width=120,height=140
-		},
-		{--mars_06.png 
-			x=366,y=1278,width=120,height=140
-		},
-		{--mars_07.png 
-			x=366,y=1136,width=120,height=140
-		},
-		{--mars_08.png 
-			x=366,y=994,width=120,height=140
-		},
-		{--mars_09.png 
-			x=366,y=852,width=120,height=140
-		},
-		{--mars_10.png 
-			x=366,y=710,width=120,height=140
-		},
-		{--mars_11.png 
-			x=366,y=568,width=120,height=140
-		},
-		{--mars_12.png 
-			x=366,y=426,width=120,height=140
-		},
-		{--mars_13.png 
-			x=366,y=284,width=120,height=140
-		},
-		{--mars_14.png 
-			x=366,y=142,width=120,height=140
-		},
-		{--mars_15.png 
-			x=366,y=0,width=120,height=140
-		},
-		{--mars_16.png 
-			x=244,y=1846,width=120,height=140
-		},
-		{--mars_17.png 
-			x=244,y=1704,width=120,height=140
-		},
-		{--mars_18.png 
-			x=244,y=1562,width=120,height=140
-		},
-		{--mars_19.png 
-			x=244,y=1420,width=120,height=140
-		},
-		{--medieval_archery.png 
-			x=976,y=568,width=120,height=140
-		},
-		{--medieval_archway.png 
-			x=976,y=426,width=120,height=140
-		},
-		{--medieval_blacksmith.png 
-			x=976,y=284,width=120,height=140
-		},
-		{--medieval_cabin.png 
-			x=976,y=142,width=120,height=140
-		},
-		{--medieval_church.png 
-			x=976,y=0,width=120,height=140
-		},
-		{--medieval_farm.png 
-			x=854,y=1846,width=120,height=140
-		},
-		{--medieval_house.png 
-			x=854,y=1704,width=120,height=140
-		},
-		{--medieval_largeCastle.png 
-			x=854,y=1562,width=120,height=140
-		},
-		{--medieval_lumber.png 
-			x=610,y=852,width=120,height=140
-		},
-		{--medieval_mine.png 
-			x=488,y=142,width=120,height=140
-		},
-		{--medieval_openCastle.png 
-			x=854,y=1136,width=120,height=140
-		},
-		{--medieval_ruins.png 
-			x=854,y=994,width=120,height=140
-		},
-		{--medieval_smallCastle.png 
-			x=854,y=852,width=120,height=140
-		},
-		{--medieval_tower.png 
-			x=854,y=710,width=120,height=140
-		},
-		{--medieval_windmill.png 
-			x=854,y=568,width=120,height=140
-		},
-		{--military_entrance.png 
-			x=854,y=426,width=120,height=140
-		},
-		{--military_hangar.png 
-			x=854,y=284,width=120,height=140
-		},
-		{--military_rockets.png 
-			x=854,y=142,width=120,height=140
-		},
-		{--military_tanks.png 
-			x=366,y=1846,width=120,height=140
-		},
-		{--military_turretLarge.png
-			x=732,y=1846,width=120,height=140
-		},
-		{--military_turretMedium.png
-			x=732,y=1704,width=120,height=140
-		},
-		{--military_turretSmall.png
-			x=732,y=1562,width=120,height=140
-		},
-		{--mill_crane.png
-			x=610,y=1278,width=120,height=140
-		},
-		{--mill_cutter.png
-			x=1220,y=1562,width=120,height=140
-		},
-		{--mill_factory.png
-			x=1220,y=1278,width=120,height=140
-		},
-		{--mill_stoneWarehouse.png
-			x=1220,y=1704,width=120,height=140
-		},
-		{--mill_storage.png
-			x=1342,y=0,width=120,height=140
-		},
-		{--mill_warehouse.png
-			x=1220,y=1846,width=120,height=140
-		},
-		{--modern_campsite.png
-			x=1220,y=994,width=120,height=140
-		},
-		{--modern_cornerShop.png
-			x=1220,y=852,width=120,height=140
-		},
-		{--modern_house.png
-			x=1220,y=568,width=120,height=140
-		},
-		{--modern_houseSmall.png
-			x=1220,y=1420,width=120,height=140
-		},
-		{--modern_largeBuilding.png
-			x=1220,y=284,width=120,height=140
-		},
-		{--modern_oldBuilding.png
-			x=1220,y=1136,width=120,height=140
-		},
-		{--modern_petrol.png
-			x=1098,y=1846,width=120,height=140
-		},
-		{--modern_shop.png
-			x=1098,y=1136,width=120,height=140
-		},
-		{--modern_skyscraper.png
-			x=1220,y=710,width=120,height=140
-		},
-		{--modern_skyscraperGlass.png
-			x=1098,y=994,width=120,height=140
-		},
-		{--modern_trailerpark.png
-			x=1220,y=426,width=120,height=140
-		},
-		{--modern_villa.png
-			x=1098,y=426,width=120,height=140
-		},
-		{--modern_villageLarge.png
-			x=1220,y=142,width=120,height=140
-		},
-		{--sand_01.png
-			x=244,y=1278,width=120,height=140
-		},
-		{--sand_02.png
-			x=1342,y=348,width=88,height=101
-		},
-		{--sand_03.png
-			x=244,y=994,width=120,height=140
-		},
-		{--sand_04.png
-			x=244,y=852,width=120,height=140
-		},
-		{--sand_05.png
-			x=244,y=710,width=120,height=140
-		},
-		{--sand_06.png
-			x=244,y=568,width=120,height=140
-		},
 		{--sand_07.png
 			x=244,y=426,width=120,height=140
-		},
-		{--sand_08.png
-			x=244,y=284,width=120,height=140
-		},
-		{--sand_09.png
-			x=244,y=142,width=120,height=140
-		},
-		{--sand_10.png
-			x=244,y=0,width=120,height=140
-		},
-		{--sand_11.png
-			x=122,y=1846,width=120,height=140
 		},
 		{--sand_12.png
 			x=122,y=1704,width=120,height=140
@@ -365,92 +92,8 @@ local sheetOptions =
 		{--sand_18.png
 			x=122,y=852,width=120,height=140
 		},
-		{--sand_19.png
-			x=122,y=710,width=120,height=140
-		},
-		{--scifi_base.png
-			x=1220,y=0,width=120,height=140
-		},
-		{--scifi_building.png
-			x=976,y=1704,width=120,height=140
-		},
-		{--scifi_cargo.png
-			x=1098,y=1704,width=120,height=140
-		},
-		{--scifi_corner.png
-			x=1098,y=1562,width=120,height=140
-		},
-		{--scifi_domes.png
-			x=1098,y=1420,width=120,height=140
-		},
-		{--scifi_energy.png
-			x=1098,y=1278,width=120,height=140
-		},
-		{--scifi_factory.png
-			x=976,y=852,width=120,height=140
-		},
-		{--scifi_factoryHangar.png
-			x=854,y=1420,width=120,height=140
-		},
-		{--scifi_factoryHigh.png
-			x=1098,y=852,width=120,height=140
-		},
-		{--scifi_foliage.png
-			x=1098,y=710,width=120,height=140
-		},
-		{--scifi_hangar.png
-			x=1098,y=568,width=120,height=140
-		},
-		{--scifi_headquarters.png
-			x=854,y=1278,width=120,height=140
-		},
-		{--scifi_living.png
-			x=1098,y=284,width=120,height=140
-		},
-		{--scifi_port.png
-			x=1098,y=142,width=120,height=140
-		},
-		{--scifi_silo.png
-			x=1098,y=0,width=120,height=140
-		},
-		{--scifi_skyscraper.png
-			x=976,y=1846,width=120,height=140
-		},
-		{--scifi_tower.png
-			x=854,y=0,width=120,height=140
-		},
-		{--stone_01.png
-			x=122,y=568,width=120,height=140
-		},
-		{--stone_02.png
-			x=1342,y=142,width=88,height=101
-		},
-		{--stone_03.png
-			x=122,y=284,width=120,height=140
-		},
-		{--stone_04.png
-			x=122,y=142,width=120,height=140
-		},
-		{--stone_05.png
-			x=122,y=0,width=120,height=140
-		},
-		{--stone_06.png
-			x=0,y=1846,width=120,height=140
-		},
 		{--stone_07.png
 			x=0,y=1704,width=120,height=140
-		},
-		{--stone_08.png
-			x=0,y=1562,width=120,height=140
-		},
-		{--stone_09.png
-			x=0,y=1420,width=120,height=140
-		},
-		{--stone_10.png
-			x=0,y=1278,width=120,height=140
-		},
-		{--stone_11.png
-			x=0,y=1136,width=120,height=140
 		},
 		{--stone_12.png
 			x=0,y=994,width=120,height=140
@@ -458,52 +101,18 @@ local sheetOptions =
 		{--stone_13.png
 			x=0,y=852,width=120,height=140
 		},
-		{--stone_14.png 
-			x=0,y=710,width=120,height=140
-		},
-		{--stone_15.png
-			x=0,y=568,width=120,height=140
-		},
-		{--stone_16.png
-			x=0,y=426,width=120,height=140
-		},
-		{--stone_17.png
-			x=0,y=284,width=120,height=140
-		},
-		{--stone_18.png
-			x=0,y=142,width=120,height=140
-		},
-		{--stone_19.png
-			x=0,y=0,width=120,height=140
-		},
-		{--western_bank.png
-			x=976,y=1562,width=120,height=140
-		},
-		{--western_general.png
-			x=976,y=1420,width=120,height=140
-		},
-		{--western_indians.png
-			x=976,y=1278,width=120,height=140
-		},
-		{--western_saloon.png
-			x=976,y=1136,width=120,height=140
-		},
-		{--western_sheriff.png
-			x=976,y=994,width=120,height=140
-		},
-		{--western_station.png
-			x=732,y=568,width=120,height=140
-		},
-		{--western_watertower.png
-			x=976,y=710,width=120,height=140
-		},
 	},
 }
-local objectSheet = graphics.newImageSheet( "hexagonAll_sheet.png", sheetOptions )
+local terrainTiles = graphics.newImageSheet( "hexagonAll_sheet.png", terrainSheet )
 
 -- Initialize variables
 local gameTime = 240
 local score = 0
+
+-- Map
+local mapTable = {}
+local mapWidth = 11
+local mapHeight = 7
 
 -- Player
 local playerWood = 0
@@ -550,6 +159,28 @@ local function updateText()
 	enemieSoldierText.text = "Soldiers: " .. enemieSoldier
 end
 
+local function createMap()
+	local offsetX = 0
+	local offsetY = 0
+	for i = 0, mapHeight do
+		for j = 0, mapWidth do
+			local rnd = math.random(27)
+			local newTile = display.newImageRect(mainGroup, terrainTiles, rnd ,120,140)
+			table.insert(mapTable, newTile)
+			if(i%2 == 0) then
+				offsetX = 0
+				offsetY = i * 35
+			else
+				offsetX = 60
+				offsetY = i * 35
+			end
+
+			newTile.x = j * 120 + offsetX
+			newTile.y = i * 140 - offsetY
+		end
+	end
+end
+
 local function computeScore()
 	score = playerWood + playerFood + (playerHouses * 5)+ (playerSoldier * 10)
 end
@@ -575,7 +206,7 @@ function scene:create( event )
 	local sceneGroup = self.view
 	-- Code here runs when the scene is first created but has not yet appeared on screen
 
--- Set up display groups
+	-- Set up display groups
 	backGroup = display.newGroup()  -- Display group for the background image
 	sceneGroup:insert( backGroup )  -- Insert into the scene's view group
 
@@ -585,23 +216,30 @@ function scene:create( event )
 	uiGroup = display.newGroup()    -- Display group for UI objects like the score
 	sceneGroup:insert( uiGroup )    -- Insert into the scene's view group
 
-	-- Display Texts
-	enemieText = display.newText( uiGroup, "Enemie ", 48, 260, native.systemFont, 24)
-	enemieWoodText = display.newText(uiGroup, "Wood: " .. enemieWood, 160, 262, native.systemFont, 16)
-	enemieFoodText = display.newText(uiGroup, "Food: " .. enemieFood, 260, 262, native.systemFont, 16)
-	enemieHouseText = display.newText(uiGroup, "Houses: " .. enemieHouse, 360, 262, native.systemFont, 16)
-	enemieSoldierText = display.newText(uiGroup, "Soldiers: " .. enemieSoldier, 460, 262, native.systemFont, 16)
+	-- Map
+	createMap()
 
-	local abortButton = display.newText( sceneGroup, "Abort", 650, 265, native.systemFont, 36 )
-	abortButton:setFillColor( 1, 0, 0 )
+	-- Display Texts
+	
+	enemieText = display.newText( uiGroup, "Enemie ", 90, 60, native.systemFont, 48)
+	enemieText:setFillColor(1,0,0)
+	enemieWoodText = display.newText(uiGroup, "Wood: " .. enemieWood, 350, 60, native.systemFont, 32)
+	enemieFoodText = display.newText(uiGroup, "Food: " .. enemieFood, 500, 60, native.systemFont, 32)
+	enemieHouseText = display.newText(uiGroup, "Houses: " .. enemieHouse, 675, 60, native.systemFont, 32)
+	enemieSoldierText = display.newText(uiGroup, "Soldiers: " .. enemieSoldier, 850, 60, native.systemFont, 32)
+
+	local abortButton = display.newText( sceneGroup, "Exit", 1200, 60, native.systemFont, 48 )
+	abortButton:setFillColor( 0, 0, 0 )
 	abortButton:addEventListener( "tap", abortGame )
 
-	playerText = display.newText( uiGroup, "Player ", 40, 700, native.systemFont, 24)
-	playerWoodText = display.newText(uiGroup, "Wood: " .. playerWood, 160, 701, native.systemFont, 16)
-	playerFoodText = display.newText(uiGroup, "Food: " .. playerFood, 260, 701, native.systemFont, 16)
-	playerHouseText = display.newText(uiGroup, "Houses: " .. playerHouses, 360, 701, native.systemFont, 16)
-	playerSoldierText = display.newText(uiGroup, "Soldiers: " .. playerSoldier, 460, 701, native.systemFont, 16)
-	gameTimeText = display.newText(uiGroup, "Time left: ".. gameTime, 625, 700, native.systemFont, 24)
+	playerText = display.newText( uiGroup, "Player ", 90, 700, native.systemFont, 48)
+	playerText:setFillColor(0,0,1)
+	playerWoodText = display.newText(uiGroup, "Wood: " .. playerWood, 350, 701, native.systemFont, 32)
+	playerFoodText = display.newText(uiGroup, "Food: " .. playerFood, 500, 701, native.systemFont, 32)
+	playerHouseText = display.newText(uiGroup, "Houses: " .. playerHouses, 675, 701, native.systemFont, 32)
+	playerSoldierText = display.newText(uiGroup, "Soldiers: " .. playerSoldier, 850, 701, native.systemFont, 32)
+	gameTimeText = display.newText(uiGroup, "Time left: ".. gameTime, 1125, 700, native.systemFont, 48)
+	gameTimeText:setFillColor(0,1,0)
 
 end
 
@@ -633,7 +271,7 @@ function scene:hide( event )
 
 	elseif ( phase == "did" ) then
 		-- Code here runs immediately after the scene goes entirely off screen
-
+		composer.removeScene( "game" )
 	end
 end
 
