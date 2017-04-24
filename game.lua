@@ -115,7 +115,7 @@ local terrainSheet =
 		},
 	},
 }
-local terrainTiles = graphics.newImageSheet( "hexagonAll_sheet.png", terrainSheet )
+local terrainTiles = graphics.newImageSheet( "data/gfx/hexagonAll_sheet.png", terrainSheet )
 
 -- Initialize variables
 local gameLoopTimer
