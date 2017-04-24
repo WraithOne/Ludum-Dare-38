@@ -143,7 +143,7 @@ local gameLoopTimer
 local gameTime = 60
 local playerscore = 0
 local enemiescore = 0
-local enemieturns = 2
+local enemieturns = 3
 
 -- Map
 local mapTable = {}
@@ -197,8 +197,8 @@ local enemieWoodText
 local enemieFoodText
 local enemieHouseText
 local enemieSoldierText
-local playerpowerUpAxeText
-local playerpowerUpScytheText
+local enemiepowerUpAxeText
+local enemiepowerUpScytheText
 
 -- Audio
 
@@ -210,12 +210,14 @@ local function updateText()
 		playerFoodText.text = "Food: " .. playerFood
 		playerHouseText.text = "Villigars: " .. playerVilligar
 		playerSoldierText.text = "Soldiers: " .. playerSoldier
+
 		if(playerpowerUpAxe) then
 			playerpowerUpAxeText.y = 580
 		else
 			playerpowerUpAxeText.y = -100
 		end
 		playerpowerUpAxeText.text = "" .. playerpowerUpAxeTimer
+
 		if(playerpowerUpScythe) then
 			playerpowerUpScytheText.y = 580
 		else
@@ -227,12 +229,14 @@ local function updateText()
 		enemieFoodText.text = "Food: " .. enemieFood
 		enemieHouseText.text = "Houses: " .. enemieVilligar
 		enemieSoldierText.text = "Soldiers: " .. enemieSoldier
+
 		if(enemiepowerUpAxe) then
 			enemiepowerUpAxeText.y = 260
 		else
 			enemiepowerUpAxeText.y = -100
 		end
 		enemiepowerUpAxeText.text = "" .. enemiepowerUpAxeTimer
+
 		if(enemiepowerUpScythe) then
 			enemiepowerUpScytheText.y = 260
 		else
@@ -460,7 +464,19 @@ local function computeAI()
 				enemieFood = enemieFood - 10
 				enemieWood = enemieWood - 10
 				enemieVilligar = enemieVilligar - 1
-			elseif(enemieFood >= 3 and enemieWood >= 3) then
+			elseif (enemiepowerUpAxe) then
+				enemieWood = enemieWood + powerUpAmount
+			elseif (enemiepowerUpScythe) then
+				enemieFood = enemieFood + powerUpAmount
+			elseif (enemieFood >= powerUpCosts and enemieWood < 50 and rnd >= 10) then
+				enemieFood = enemieFood - powerUpCosts
+				enemiepowerUpAxeTimer = powerUpduratuion
+				enemiepowerUpAxe = true
+			elseif ( enemieWood >= powerUpCosts and enemieFood < 50 and rnd < 10) then
+				enemieWood = enemieWood - powerUpCosts
+				enemiepowerUpScytheTimer = powerUpduratuion
+				enemiepowerUpScythe = true
+			elseif(enemieFood >= 3 and enemieWood >= 3 and rnd > 18 and enemieVilligar < 5) then
 				enemieVilligar = enemieVilligar + 1
 				enemieFood = enemieFood - 3
 				enemieWood = enemieWood - 3
