@@ -87,7 +87,7 @@ function scene:create( event )
 	-- Save the scores
 	saveScores()
 
-	local background = display.newImageRect( sceneGroup, "Background.png", 1279, 719 )
+	local background = display.newImageRect( sceneGroup, "data/gfx/Background.png", 1279, 719 )
 	background.x = display.contentCenterX
 	background.y = display.contentCenterY
 
