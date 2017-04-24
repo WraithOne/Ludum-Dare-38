@@ -140,9 +140,10 @@ local powerUpScytheSprite = display.newSprite(powerUps, sequenceOptions)
 -- Initialize variables
 local playable = true
 local gameLoopTimer
-local gameTime = 10
+local gameTime = 60
 local playerscore = 0
 local enemiescore = 0
+local enemie
 
 -- Map
 local mapTable = {}
@@ -421,6 +422,8 @@ end
 
 local function endGame()
 	playable = false
+	powerUpAxeSprite.y = -100
+	powerUpScytheSprite.y = -100
 	computeScore()
 	if(playerscore > enemiescore) then
 		gameEndText.text = "!VICTORY!"
