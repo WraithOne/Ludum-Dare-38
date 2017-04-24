@@ -138,12 +138,12 @@ local powerUpAxeSprite = display.newSprite(powerUps, sequenceOptions)
 local powerUpScytheSprite = display.newSprite(powerUps, sequenceOptions)
 
 -- Initialize variables
-local playable = true
+local playable = false
 local gameLoopTimer
 local gameTime = 60
 local playerscore = 0
 local enemiescore = 0
-local enemie
+local enemieturns = 2
 
 -- Map
 local mapTable = {}
@@ -443,12 +443,34 @@ end
 
 local function abortGame()
 	playable = false
+	powerUpAxeSprite.y = -100
+	powerUpScytheSprite.y = -100
 	composer.gotoScene("menu", { time=800, effect="crossFade" })
 end
 
 local function computeAI()
 	if(playable) then
+		local turns = enemieturns
 
+		while(turns > 0) do
+			local rnd = math.random(20)
+
+			if(enemieFood >= 10 and enemieWood >= 10 and enemieVilligar >= 1) then
+				enemieSoldier = enemieSoldier + 1
+				enemieFood = enemieFood - 10
+				enemieWood = enemieWood - 10
+				enemieVilligar = enemieVilligar - 1
+			elseif(enemieFood >= 3 and enemieWood >= 3) then
+				enemieVilligar = enemieVilligar + 1
+				enemieFood = enemieFood - 3
+				enemieWood = enemieWood - 3
+			elseif(rnd >= 10) then
+				enemieFood = enemieFood + 1
+			elseif(rnd < 10) then
+				enemieWood = enemieWood + 1
+			end
+			turns = turns -1
+		end
 	end
 end
 
@@ -545,7 +567,7 @@ function scene:show( event )
 
 	if ( phase == "will" ) then
 		-- Code here runs when the scene is still off screen (but is about to come on screen)
-
+		playable = true
 	elseif ( phase == "did" ) then
 		-- Code here runs when the scene is entirely on screen
 		gameLoopTimer = timer.performWithDelay( 1000, gameLoop, 0 )
@@ -561,7 +583,8 @@ function scene:hide( event )
 
 	if ( phase == "will" ) then
 		-- Code here runs when the scene is on screen (but is about to go off screen)
-
+		playable = false
+		timer.cancel(gameLoopTimer)
 	elseif ( phase == "did" ) then
 		-- Code here runs immediately after the scene goes entirely off screen
 		composer.removeScene( "game" )
