@@ -201,6 +201,10 @@ local enemiepowerUpAxeText
 local enemiepowerUpScytheText
 
 -- Audio
+local clickSound
+local tapSound
+local powerUpSound
+local musikTrack
 
 -- Functions
 local function updateText()
@@ -253,6 +257,7 @@ local function powerUpAxeClicked()
 			playerpowerUpAxeTimer = powerUpduratuion
 			powerUpAxeSprite:setFrame(2)
 			playerFood = playerFood - powerUpCosts
+			audio.play(powerUpSound)
 		end
 	end
 end
@@ -264,6 +269,7 @@ local function powerUpScytheClicker()
 			playerpowerUpScytheTimer = powerUpduratuion
 			powerUpScytheSprite:setFrame(4)
 			playerWood = playerWood - powerUpCosts
+			audio.play(powerUpSound)
 		end
 	end
 end
@@ -309,6 +315,7 @@ local function farmClicked()
 			playerFood = playerFood + 1
 		end
 		updateText()
+		audio.play(tapSound)
 	end
 end
 
@@ -318,6 +325,7 @@ local function houseClicked()
 			playerVilligar = playerVilligar + 1
 			playerFood = playerFood - 3
 			playerWood = playerWood - 3
+			audio.play(tapSound)
 			else
 			-- Warning Text
 		end
@@ -332,6 +340,7 @@ local function lumbermillClicked()
 		else
 			playerWood = playerWood + 1
 		end
+		audio.play(tapSound)
 		updateText()
 	end
 end
@@ -343,6 +352,7 @@ local function castleClicked()
 			playerFood = playerFood - 10
 			playerWood = playerWood - 10
 			playerVilligar = playerVilligar -1
+			audio.play(tapSound)
 			else
 			-- Warning Text
 		end
@@ -449,6 +459,7 @@ local function abortGame()
 	playable = false
 	powerUpAxeSprite.y = -100
 	powerUpScytheSprite.y = -100
+	audio.play(clickSound)
 	composer.gotoScene("menu", { time=800, effect="crossFade" })
 end
 
@@ -572,6 +583,10 @@ function scene:create( event )
 	enemiepowerUpScytheText:setFillColor(1, 0, 0)
 
 	gameEndText = display.newText(uiGroup, "", -100, -100, native.systemFont, 76)
+
+	clickSound = audio.loadSound("data/sfx/click1.wav")
+	tapSound = audio.loadSound("data/sfx/rollover6.wav")
+	powerUpSound = audio.loadSound("data/sfx/switch17.wav")
 end
 
 
@@ -603,6 +618,7 @@ function scene:hide( event )
 		timer.cancel(gameLoopTimer)
 	elseif ( phase == "did" ) then
 		-- Code here runs immediately after the scene goes entirely off screen
+		audio.stop(1)
 		composer.removeScene( "game" )
 	end
 end
@@ -613,7 +629,9 @@ function scene:destroy( event )
 
 	local sceneGroup = self.view
 	-- Code here runs prior to the removal of scene's view
-
+	audio.dispose(clickSound)
+	audio.dispose(tapSound)
+	audio.dispose(powerUpSound)
 end
 
 
