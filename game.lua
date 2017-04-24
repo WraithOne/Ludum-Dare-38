@@ -138,9 +138,11 @@ local powerUpAxeSprite = display.newSprite(powerUps, sequenceOptions)
 local powerUpScytheSprite = display.newSprite(powerUps, sequenceOptions)
 
 -- Initialize variables
+local playable = true
 local gameLoopTimer
-local gameTime = 60
-local score = 0
+local gameTime = 10
+local playerscore = 0
+local enemiescore = 0
 
 -- Map
 local mapTable = {}
@@ -179,6 +181,7 @@ local mainGroup
 local uiGroup
 
 -- Text
+local gameEndText
 local gameTimeText
 local playerText
 local playerWoodText
@@ -200,131 +203,147 @@ local playerpowerUpScytheText
 
 -- Functions
 local function updateText()
-	gameTimeText.text = "Time left:" .. gameTime
-	playerWoodText.text = "Wood: " .. playerWood
-	playerFoodText.text = "Food: " .. playerFood
-	playerHouseText.text = "Villigars: " .. playerVilligar
-	playerSoldierText.text = "Soldiers: " .. playerSoldier
-	if(playerpowerUpAxe) then
-		playerpowerUpAxeText.y = 580
-	else
-		playerpowerUpAxeText.y = -100
-	end
-	playerpowerUpAxeText.text = "" .. playerpowerUpAxeTimer
-	if(playerpowerUpScythe) then
-		playerpowerUpScytheText.y = 580
-	else
-		playerpowerUpScytheText.y = -100
-	end
-	playerpowerUpScytheText.text = "" .. playerpowerUpScytheTimer
+	if(playable) then
+		gameTimeText.text = "Time left:" .. gameTime
+		playerWoodText.text = "Wood: " .. playerWood
+		playerFoodText.text = "Food: " .. playerFood
+		playerHouseText.text = "Villigars: " .. playerVilligar
+		playerSoldierText.text = "Soldiers: " .. playerSoldier
+		if(playerpowerUpAxe) then
+			playerpowerUpAxeText.y = 580
+		else
+			playerpowerUpAxeText.y = -100
+		end
+		playerpowerUpAxeText.text = "" .. playerpowerUpAxeTimer
+		if(playerpowerUpScythe) then
+			playerpowerUpScytheText.y = 580
+		else
+			playerpowerUpScytheText.y = -100
+		end
+		playerpowerUpScytheText.text = "" .. playerpowerUpScytheTimer
 
-	enemieWoodText.text = "Wood: " .. enemieWood
-	enemieFoodText.text = "Food: " .. enemieFood
-	enemieHouseText.text = "Houses: " .. enemieVilligar
-	enemieSoldierText.text = "Soldiers: " .. enemieSoldier
-	if(enemiepowerUpAxe) then
-		enemiepowerUpAxeText.y = 260
-	else
-		enemiepowerUpAxeText.y = -100
+		enemieWoodText.text = "Wood: " .. enemieWood
+		enemieFoodText.text = "Food: " .. enemieFood
+		enemieHouseText.text = "Houses: " .. enemieVilligar
+		enemieSoldierText.text = "Soldiers: " .. enemieSoldier
+		if(enemiepowerUpAxe) then
+			enemiepowerUpAxeText.y = 260
+		else
+			enemiepowerUpAxeText.y = -100
+		end
+		enemiepowerUpAxeText.text = "" .. enemiepowerUpAxeTimer
+		if(enemiepowerUpScythe) then
+			enemiepowerUpScytheText.y = 260
+		else
+			enemiepowerUpScytheText.y = -100
+		end
+		enemiepowerUpScytheText.text = "" .. enemiepowerUpScytheTimer
 	end
-	enemiepowerUpAxeText.text = "" .. enemiepowerUpAxeTimer
-	if(enemiepowerUpScythe) then
-		enemiepowerUpScytheText.y = 260
-	else
-		enemiepowerUpScytheText.y = -100
-	end
-	enemiepowerUpScytheText.text = "" .. enemiepowerUpScytheTimer
 end
 
 local function powerUpAxeClicked()
-	if( playerFood >= powerUpCosts) then
-		playerpowerUpAxe = true
-		playerpowerUpAxeTimer = powerUpduratuion
-		powerUpAxeSprite:setFrame(2)
-		playerFood = playerFood - powerUpCosts
+	if(playable) then
+		if( playerFood >= powerUpCosts) then
+			playerpowerUpAxe = true
+			playerpowerUpAxeTimer = powerUpduratuion
+			powerUpAxeSprite:setFrame(2)
+			playerFood = playerFood - powerUpCosts
+		end
 	end
 end
 
 local function powerUpScytheClicker()
-	if ( playerWood >= powerUpCosts) then
-		playerpowerUpScythe = true
-		playerpowerUpScytheTimer = powerUpduratuion
-		powerUpScytheSprite:setFrame(4)
-		playerWood = playerWood - powerUpCosts
+	if(playable) then
+		if ( playerWood >= powerUpCosts) then
+			playerpowerUpScythe = true
+			playerpowerUpScytheTimer = powerUpduratuion
+			powerUpScytheSprite:setFrame(4)
+			playerWood = playerWood - powerUpCosts
 		end
+	end
 end
 
 local function updatePowerUp()
-	-- Player
-	if (playerpowerUpAxeTimer <= 0) then
-		playerpowerUpAxe = false
-		powerUpAxeSprite:setFrame(1)
-	end
-	if (playerpowerUpScytheTimer <= 0) then
-		playerpowerUpScythe = false
-		powerUpScytheSprite:setFrame(3)
-	end
-	if(playerpowerUpAxe) then
-		playerpowerUpAxeTimer = playerpowerUpAxeTimer - 1
-	end
-	if(playerpowerUpScythe) then
-		playerpowerUpScytheTimer = playerpowerUpScytheTimer - 1
-	end
-	-- Enemie
-	if (enemiepowerUpAxeTimer <= 0) then
-		enemiepowerUpAxe = false
-	end
-	if (enemiepowerUpScytheTimer <= 0) then
-		enemiepowerUpScythe = false
-	end
-	if(enemiepowerUpAxe) then
-		enemiepowerUpAxeTimer = enemiepowerUpAxeTimer - 1
-	end
-	if(enemiepowerUpScythe) then
-		enemiepowerUpScytheTimer = enemiepowerUpScytheTimer - 1
+	if(playable) then
+		-- Player
+		if (playerpowerUpAxeTimer <= 0) then
+			playerpowerUpAxe = false
+			powerUpAxeSprite:setFrame(1)
+		end
+		if (playerpowerUpScytheTimer <= 0) then
+			playerpowerUpScythe = false
+			powerUpScytheSprite:setFrame(3)
+		end
+		if(playerpowerUpAxe) then
+			playerpowerUpAxeTimer = playerpowerUpAxeTimer - 1
+		end
+		if(playerpowerUpScythe) then
+			playerpowerUpScytheTimer = playerpowerUpScytheTimer - 1
+		end
+		-- Enemie
+		if (enemiepowerUpAxeTimer <= 0) then
+			enemiepowerUpAxe = false
+		end
+		if (enemiepowerUpScytheTimer <= 0) then
+			enemiepowerUpScythe = false
+		end
+		if(enemiepowerUpAxe) then
+			enemiepowerUpAxeTimer = enemiepowerUpAxeTimer - 1
+		end
+		if(enemiepowerUpScythe) then
+			enemiepowerUpScytheTimer = enemiepowerUpScytheTimer - 1
+		end
 	end
 end
 
 local function farmClicked()
-	if(playerpowerUpScythe) then
-		playerFood = playerFood + powerUpAmount
-	else
-		playerFood = playerFood + 1
+	if(playable) then
+		if(playerpowerUpScythe) then
+			playerFood = playerFood + powerUpAmount
+		else
+			playerFood = playerFood + 1
+		end
+		updateText()
 	end
-	updateText()
 end
 
 local function houseClicked()
-	if(playerFood >= 3 and playerWood >= 3) then
-		playerVilligar = playerVilligar + 1
-		playerFood = playerFood - 3
-		playerWood = playerWood - 3
-		else
-		-- Warning Text
+	if(playable) then
+		if(playerFood >= 3 and playerWood >= 3) then
+			playerVilligar = playerVilligar + 1
+			playerFood = playerFood - 3
+			playerWood = playerWood - 3
+			else
+			-- Warning Text
+		end
+		updateText()
 	end
-	updateText()
 end
 
 local function lumbermillClicked()
-	if (playerpowerUpAxe) then
-		playerWood = playerWood + powerUpAmount
-	else
-		playerWood = playerWood + 1
+	if(playable) then
+		if (playerpowerUpAxe) then
+			playerWood = playerWood + powerUpAmount
+		else
+			playerWood = playerWood + 1
+		end
+		updateText()
 	end
-	updateText()
 end
 
 local function castleClicked()
-	if(playerFood >= 10 and playerWood >= 10 and playerVilligar >= 1) then
-		playerSoldier = playerSoldier + 1
-		playerFood = playerFood - 10
-		playerWood = playerWood - 10
-		playerVilligar = playerVilligar -1
-		else
-		-- Warning Text
-	end
-	
-	updateText()	
+	if(playable) then
+		if(playerFood >= 10 and playerWood >= 10 and playerVilligar >= 1) then
+			playerSoldier = playerSoldier + 1
+			playerFood = playerFood - 10
+			playerWood = playerWood - 10
+			playerVilligar = playerVilligar -1
+			else
+			-- Warning Text
+		end
+		
+		updateText()
+	end	
 end
 
 local function createMap()
@@ -396,21 +415,38 @@ local function createMap()
 end
 
 local function computeScore()
-	score = playerWood + playerFood + (playerVilligar * 5)+ (playerSoldier * 10)
+	playerscore = playerWood + playerFood + (playerVilligar * 50) + (playerSoldier * 100)
+	enemiescore = enemieWood + enemieFood + (enemieVilligar * 50) + (enemieSoldier * 100)
 end
 
 local function endGame()
+	playable = false
 	computeScore()
-	composer.setVariable("finalScore", score)
-	composer.gotoScene("highScore", {time=800, effect="crossFade"})
+	if(playerscore > enemiescore) then
+		gameEndText.text = "!VICTORY!"
+		gameEndText:setFillColor(0,0,1)
+		gameEndText.x = display.contentCenterX
+		gameEndText.y = display.contentCenterY
+		composer.setVariable("finalScore", playerscore)
+		composer.gotoScene("highscore", {time=5000, effect="crossFade"})
+	else
+		gameEndText.text = "DEFEATED"
+		gameEndText:setFillColor(1, 0, 0)
+		gameEndText.x = display.contentCenterX
+		gameEndText.y = display.contentCenterY
+		composer.gotoScene("menu", {time=5000, effect="crossFade"})
+	end
 end
 
 local function abortGame()
+	playable = false
 	composer.gotoScene("menu", { time=800, effect="crossFade" })
 end
 
 local function computeAI()
+	if(playable) then
 
+	end
 end
 
 local function gameLoop()
@@ -418,10 +454,12 @@ local function gameLoop()
 	if(gameTime < 1) then
 		endGame()
 	end
-	computeAI()
+	if(playable) then
+		computeAI()
 
-	updatePowerUp()
-	updateText()
+		updatePowerUp()
+		updateText()
+	end
 end
 
 -- -----------------------------------------------------------------------------------
@@ -491,6 +529,8 @@ function scene:create( event )
 	enemiepowerUpAxeText:setFillColor(1, 0, 0)
 	enemiepowerUpScytheText = display.newText(uiGroup, "".. enemiepowerUpScytheTimer , 360, -100, native.systemFont, 32)
 	enemiepowerUpScytheText:setFillColor(1, 0, 0)
+
+	gameEndText = display.newText(uiGroup, "", -100, -100, native.systemFont, 76)
 end
 
 
