@@ -205,13 +205,35 @@ local function updateText()
 	playerFoodText.text = "Food: " .. playerFood
 	playerHouseText.text = "Villigars: " .. playerVilligar
 	playerSoldierText.text = "Soldiers: " .. playerSoldier
+	if(playerpowerUpAxe) then
+		playerpowerUpAxeText.y = 580
+	else
+		playerpowerUpAxeText.y = -100
+	end
 	playerpowerUpAxeText.text = "" .. playerpowerUpAxeTimer
+	if(playerpowerUpScythe) then
+		playerpowerUpScytheText.y = 580
+	else
+		playerpowerUpScytheText.y = -100
+	end
 	playerpowerUpScytheText.text = "" .. playerpowerUpScytheTimer
 
 	enemieWoodText.text = "Wood: " .. enemieWood
 	enemieFoodText.text = "Food: " .. enemieFood
 	enemieHouseText.text = "Houses: " .. enemieVilligar
 	enemieSoldierText.text = "Soldiers: " .. enemieSoldier
+	if(enemiepowerUpAxe) then
+		enemiepowerUpAxeText.y = 260
+	else
+		enemiepowerUpAxeText.y = -100
+	end
+	enemiepowerUpAxeText.text = "" .. enemiepowerUpAxeTimer
+	if(enemiepowerUpScythe) then
+		enemiepowerUpScytheText.y = 260
+	else
+		enemiepowerUpScytheText.y = -100
+	end
+	enemiepowerUpScytheText.text = "" .. enemiepowerUpScytheTimer
 end
 
 local function powerUpAxeClicked()
@@ -460,14 +482,14 @@ function scene:create( event )
 	powerUpScytheSprite.y = 600
 	powerUpScytheSprite:addEventListener("tap", powerUpScytheClicker)
 
-	playerpowerUpAxeText = display.newText(uiGroup, "".. playerpowerUpAxeTimer , 840, 580, native.systemFont, 32)
+	playerpowerUpAxeText = display.newText(uiGroup, "".. playerpowerUpAxeTimer , 840, -100, native.systemFont, 32)
 	playerpowerUpAxeText:setFillColor(0,0,1)
-	playerpowerUpScytheText = display.newText(uiGroup, "".. playerpowerUpScytheTimer , 360, 580, native.systemFont, 32)
+	playerpowerUpScytheText = display.newText(uiGroup, "".. playerpowerUpScytheTimer , 360, -100, native.systemFont, 32)
 	playerpowerUpScytheText:setFillColor(0,0,1)
 
-	enemiepowerUpAxeText = display.newText(uiGroup, "".. enemiepowerUpAxeTimer , 840, 260, native.systemFont, 32)
+	enemiepowerUpAxeText = display.newText(uiGroup, "".. enemiepowerUpAxeTimer , 840, -100, native.systemFont, 32)
 	enemiepowerUpAxeText:setFillColor(1, 0, 0)
-	enemiepowerUpScytheText = display.newText(uiGroup, "".. enemiepowerUpScytheTimer , 360, 260, native.systemFont, 32)
+	enemiepowerUpScytheText = display.newText(uiGroup, "".. enemiepowerUpScytheTimer , 360, -100, native.systemFont, 32)
 	enemiepowerUpScytheText:setFillColor(1, 0, 0)
 end
 
