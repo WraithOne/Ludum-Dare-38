@@ -53,6 +53,7 @@ function scene:create( event )
 	highScoresButton:addEventListener( "tap", gotoHighScore )
 
 	clickSound = audio.loadSound("data/sfx/click1.wav")
+	musikTrack = audio.loadStream("data/music/Angevin_B.wav")
 end
 
 
@@ -67,7 +68,7 @@ function scene:show( event )
 
 	elseif ( phase == "did" ) then
 		-- Code here runs when the scene is entirely on screen
-
+		audio.play(musikTrack, {channel=1, loops=-1})
 	end
 end
 
@@ -83,7 +84,7 @@ function scene:hide( event )
 
 	elseif ( phase == "did" ) then
 		-- Code here runs immediately after the scene goes entirely off screen
-		--audio.stop(1)
+		audio.stop(1)
 	end
 end
 
@@ -94,6 +95,7 @@ function scene:destroy( event )
 	local sceneGroup = self.view
 	-- Code here runs prior to the removal of scene's view
 	audio.dispose(clickSound)
+	audio.dispose(musikTrack)
 end
 
 

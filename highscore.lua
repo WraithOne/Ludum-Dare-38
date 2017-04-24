@@ -23,7 +23,6 @@ local scoresTable = {}
 local filePath = system.pathForFile( "scores.json", system.DocumentsDirectory )
 
 local clickSound
-local musikTrack
 
 local function loadScores()
 
@@ -39,7 +38,6 @@ local function loadScores()
 		scoresTable = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
 	end
 end
-
 
 local function saveScores()
 
@@ -122,7 +120,6 @@ function scene:create( event )
 	menuButton:setFillColor( 0, 0, 0 )
 	menuButton:addEventListener( "tap", gotoMenu )
 
-	--musicTrack = audio.loadStream( "audio/Midnight-Crawlers_Looping.wav" )
 	clickSound = audio.loadSound("data/sfx/click1.wav")
 end
 
@@ -138,8 +135,6 @@ function scene:show( event )
 
 	elseif ( phase == "did" ) then
 		-- Code here runs when the scene is entirely on screen
-		-- Start the music!
-		--audio.play( musicTrack, { channel=1, loops=-1 } )
 	end
 end
 
@@ -155,8 +150,6 @@ function scene:hide( event )
 
 	elseif ( phase == "did" ) then
 		-- Code here runs immediately after the scene goes entirely off screen
-		-- Stop the music!
-		audio.stop( 1 )
 		composer.removeScene( "highscores" )
 	end
 end
@@ -169,7 +162,6 @@ function scene:destroy( event )
 	-- Code here runs prior to the removal of scene's view
 	-- Dispose audio!
 	audio.dispose(click1)
-	--audio.dispose( musicTrack )
 end
 
 

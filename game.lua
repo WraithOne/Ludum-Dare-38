@@ -587,6 +587,7 @@ function scene:create( event )
 	clickSound = audio.loadSound("data/sfx/click1.wav")
 	tapSound = audio.loadSound("data/sfx/rollover6.wav")
 	powerUpSound = audio.loadSound("data/sfx/switch17.wav")
+	musikTrack = audio.loadStream("data/music/Angevin_B.wav")
 end
 
 
@@ -602,6 +603,7 @@ function scene:show( event )
 	elseif ( phase == "did" ) then
 		-- Code here runs when the scene is entirely on screen
 		gameLoopTimer = timer.performWithDelay( 1000, gameLoop, 0 )
+		audio.play(musikTrack, {channel=1, loops=-1})
 	end
 end
 
@@ -632,6 +634,7 @@ function scene:destroy( event )
 	audio.dispose(clickSound)
 	audio.dispose(tapSound)
 	audio.dispose(powerUpSound)
+	audio.dispose(musikTrack)
 end
 
 
