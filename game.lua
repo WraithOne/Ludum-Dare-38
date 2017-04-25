@@ -153,13 +153,13 @@ local mapHeight = 7
 -- Player
 local playerWood = 0
 local playerFood = 0
-local playerVilligar = 0
+local playerVillagers = 0
 local playerSoldier = 0
 
 -- Enemie
 local enemieWood = 0
 local enemieFood = 0
-local enemieVilligar = 0
+local enemieVillagers = 0
 local enemieSoldier = 0
 
 -- Power Ups
@@ -187,7 +187,7 @@ local gameTimeText
 local playerText
 local playerWoodText
 local playerFoodText
-local playerHouseText
+local playerVillagersText
 local playerSoldierText
 local playerpowerUpAxeText
 local playerpowerUpScytheText
@@ -195,7 +195,7 @@ local playerpowerUpScytheText
 local enemieText
 local enemieWoodText
 local enemieFoodText
-local enemieHouseText
+local enemieVillagersText
 local enemieSoldierText
 local enemiepowerUpAxeText
 local enemiepowerUpScytheText
@@ -212,7 +212,7 @@ local function updateText()
 		gameTimeText.text = "Time left:" .. gameTime
 		playerWoodText.text = "Wood: " .. playerWood
 		playerFoodText.text = "Food: " .. playerFood
-		playerHouseText.text = "Villigars: " .. playerVilligar
+		playerVillagersText.text = "Villagers: " .. playerVillagers
 		playerSoldierText.text = "Soldiers: " .. playerSoldier
 
 		if(playerpowerUpAxe) then
@@ -231,7 +231,7 @@ local function updateText()
 
 		enemieWoodText.text = "Wood: " .. enemieWood
 		enemieFoodText.text = "Food: " .. enemieFood
-		enemieHouseText.text = "Houses: " .. enemieVilligar
+		enemieVillagersText.text = "Villagers: " .. enemieVillagers
 		enemieSoldierText.text = "Soldiers: " .. enemieSoldier
 
 		if(enemiepowerUpAxe) then
@@ -322,7 +322,7 @@ end
 local function houseClicked()
 	if(playable) then
 		if(playerFood >= 3 and playerWood >= 3) then
-			playerVilligar = playerVilligar + 1
+			playerVillagers = playerVillagers + 1
 			playerFood = playerFood - 3
 			playerWood = playerWood - 3
 			audio.play(tapSound)
@@ -347,11 +347,11 @@ end
 
 local function castleClicked()
 	if(playable) then
-		if(playerFood >= 10 and playerWood >= 10 and playerVilligar >= 1) then
+		if(playerFood >= 10 and playerWood >= 10 and playerVillagers >= 1) then
 			playerSoldier = playerSoldier + 1
 			playerFood = playerFood - 10
 			playerWood = playerWood - 10
-			playerVilligar = playerVilligar -1
+			playerVillagers = playerVillagers -1
 			audio.play(tapSound)
 			else
 			-- Warning Text
@@ -430,8 +430,8 @@ local function createMap()
 end
 
 local function computeScore()
-	playerscore = playerWood + playerFood + (playerVilligar * 50) + (playerSoldier * 100)
-	enemiescore = enemieWood + enemieFood + (enemieVilligar * 50) + (enemieSoldier * 100)
+	playerscore = playerWood + playerFood + (playerVillagers * 50) + (playerSoldier * 100)
+	enemiescore = enemieWood + enemieFood + (enemieVillagers * 50) + (enemieSoldier * 100)
 end
 
 local function endGame()
@@ -470,11 +470,11 @@ local function computeAI()
 		while(turns > 0) do
 			local rnd = math.random(20)
 
-			if(enemieFood >= 10 and enemieWood >= 10 and enemieVilligar >= 1) then
+			if(enemieFood >= 10 and enemieWood >= 10 and enemieVillagers >= 1) then
 				enemieSoldier = enemieSoldier + 1
 				enemieFood = enemieFood - 10
 				enemieWood = enemieWood - 10
-				enemieVilligar = enemieVilligar - 1
+				enemieVillagers = enemieVillagers - 1
 			elseif (enemiepowerUpAxe) then
 				enemieWood = enemieWood + powerUpAmount
 			elseif (enemiepowerUpScythe) then
@@ -487,8 +487,8 @@ local function computeAI()
 				enemieWood = enemieWood - powerUpCosts
 				enemiepowerUpScytheTimer = powerUpduratuion
 				enemiepowerUpScythe = true
-			elseif(enemieFood >= 3 and enemieWood >= 3 and rnd > 18 and enemieVilligar < 5) then
-				enemieVilligar = enemieVilligar + 1
+			elseif(enemieFood >= 3 and enemieWood >= 3 and rnd > 18 and enemieVillagers < 5) then
+				enemieVillagers = enemieVillagers + 1
 				enemieFood = enemieFood - 3
 				enemieWood = enemieWood - 3
 			elseif(rnd >= 10) then
@@ -540,11 +540,11 @@ function scene:create( event )
 	-- Display Texts
 	local enemieRectangle = display.newRect( uiGroup, display.contentCenterX, 5, 700, 125 )
 	enemieRectangle:setFillColor( 0.5 )
-	enemieText = display.newText( uiGroup, "Enemie ", 90, 45, native.systemFont, 48)
+	enemieText = display.newText( uiGroup, "Enemy ", 90, 45, native.systemFont, 48)
 	enemieText:setFillColor(1,0,0)
 	enemieWoodText = display.newText(uiGroup, "Wood: " .. enemieWood, 360, 45, native.systemFont, 32)
 	enemieFoodText = display.newText(uiGroup, "Food: " .. enemieFood, 540, 45, native.systemFont, 32)
-	enemieHouseText = display.newText(uiGroup, "Villigars: " .. enemieVilligar, 715, 45, native.systemFont, 32)
+	enemieVillagersText = display.newText(uiGroup, "Villagers: " .. enemieVillagers, 715, 45, native.systemFont, 32)
 	enemieSoldierText = display.newText(uiGroup, "Soldiers: " .. enemieSoldier, 900, 45, native.systemFont, 32)
 
 	local abortButton = display.newText( sceneGroup, "Exit", 1225, 45, native.systemFont, 48 )
@@ -557,7 +557,7 @@ function scene:create( event )
 	playerText:setFillColor(0,0,1)
 	playerWoodText = display.newText(uiGroup, "Wood: " .. playerWood, 360, 727, native.systemFont, 32)
 	playerFoodText = display.newText(uiGroup, "Food: " .. playerFood, 540, 727, native.systemFont, 32)
-	playerHouseText = display.newText(uiGroup, "Villigars: " .. playerVilligar, 715, 727, native.systemFont, 32)
+	playerVillagersText = display.newText(uiGroup, "Villagers: " .. playerVillagers, 715, 727, native.systemFont, 32)
 	playerSoldierText = display.newText(uiGroup, "Soldiers: " .. playerSoldier, 900, 727, native.systemFont, 32)
 	gameTimeText = display.newText(uiGroup, "Time left: ".. gameTime, 1135, 720, native.systemFont, 48)
 	gameTimeText:setFillColor(0,1,0)
